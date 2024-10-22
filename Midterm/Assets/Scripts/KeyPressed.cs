@@ -81,11 +81,8 @@ public class KeyPressed : MonoBehaviour
     // Function to shoot a sphere from the cannon arm
     private void ShootSphere(int keyNumber)
     {
-        // Calculate the spawn position based on the cannon arm's position and its rotation
-        Vector3 spawnPosition = cannonArm.position + cannonArm.forward * 1.3f + cannonArm.up * 1.3f;
-
         // Instantiate the sphere at the calculated position
-        GameObject bulletObject = Instantiate(bullet, spawnPosition, cannonArm.rotation);
+        GameObject bulletObject = Instantiate(bullet, cannonArm.position + cannonArm.up * 1.5f, cannonArm.rotation); // Adjust the position if needed
 
         // Add force to the sphere's Rigidbody to shoot it upwards
         Rigidbody rb = bulletObject.GetComponent<Rigidbody>();
@@ -95,15 +92,16 @@ public class KeyPressed : MonoBehaviour
             rb.AddForce(cannonArm.up * shootForce); // Shoot it straight up
         }
 
-        DisplayValueText(keyNumber, bulletObject.transform);
+        DisplayValueText(keyNumber, bulletObject);
 
     }
 
     // Function to display legacy text
-    private void DisplayValueText(int keyNumber, Transform sphereTransform)
+    // Function to display legacy text
+    private void DisplayValueText(int keyNumber, GameObject parentSphere)
     {
         // Instantiate the legacy text prefab at the position above the bullet
-        GameObject textObject = Instantiate(bulletValueText, sphereTransform.position + Vector3.up * 1.5f, Quaternion.identity);
+        GameObject textObject = Instantiate(bulletValueText, parentSphere.transform.position + Vector3.up * 1.5f, Quaternion.identity);
 
         // Get the Text component from the instantiated object
         Text numberUIText = textObject.GetComponent<Text>();
@@ -120,6 +118,8 @@ public class KeyPressed : MonoBehaviour
         }
 
         // Position adjustment to make sure text appears correctly above the sphere
-        textObject.transform.position = sphereTransform.position + Vector3.up * 1.5f; // Adjust height as necessary
+        textObject.transform.position = parentSphere.transform.position + Vector3.up * 1.5f; // Adjust height as necessary
+
     }
+
 }
