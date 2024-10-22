@@ -73,7 +73,7 @@ public class KeyPressed : MonoBehaviour
     private void ShootSphere()
     {
         // Calculate the spawn position based on the cannon arm's position and its rotation
-        Vector3 spawnPosition = cannonArm.position + cannonArm.forward * 1.5f + cannonArm.up * 1.5f; // Adjust this based on sphere size
+        Vector3 spawnPosition = cannonArm.position + cannonArm.forward * 1.3f + cannonArm.up * 1.3f;
 
         // Instantiate the sphere at the calculated position
         GameObject sphere = Instantiate(spherePrefab, spawnPosition, cannonArm.rotation);

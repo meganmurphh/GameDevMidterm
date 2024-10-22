@@ -7557,7 +7557,9 @@ MonoBehaviour:
   fKey: {fileID: 2026119675}
   spherePrefab: {fileID: 2752581506558777081, guid: e707de61c4a937c48a9df7decd273720, type: 3}
   cannonArm: {fileID: 1703675558}
+  numberTextPrefab: {fileID: 0}
   shootForce: 550
+  shootCooldown: 0.5
 --- !u!4 &1704625937
 Transform:
   m_ObjectHideFlags: 0
