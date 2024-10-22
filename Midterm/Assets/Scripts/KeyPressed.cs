@@ -6,6 +6,11 @@ public class KeyPressed : MonoBehaviour
     public GameObject dKey; // Reference to the D key GameObject
     public GameObject fKey; // Reference to the F key GameObject
 
+    public GameObject spherePrefab; // Reference to the sphere prefab
+    public Transform cannonArm; // Reference to the cannon arm's position
+
+    public float shootForce = 500f; // Force with which the sphere will be shot
+
     // Define the light grey color
     private Color lightGreyColor = new Color(0.75f, 0.75f, 0.75f);
 
@@ -25,9 +30,10 @@ public class KeyPressed : MonoBehaviour
     void Update()
     {
         // Check if the S key is pressed
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S)) // Change to GetKeyDown
         {
             ChangeColor(sKey, lightGreyColor);
+            ShootSphere();
         }
         else
         {
@@ -35,9 +41,10 @@ public class KeyPressed : MonoBehaviour
         }
 
         // Check if the D key is pressed
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D)) // Change to GetKeyDown
         {
             ChangeColor(dKey, lightGreyColor);
+            ShootSphere();
         }
         else
         {
@@ -45,9 +52,10 @@ public class KeyPressed : MonoBehaviour
         }
 
         // Check if the F key is pressed
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F)) // Change to GetKeyDown
         {
             ChangeColor(fKey, lightGreyColor);
+            ShootSphere();
         }
         else
         {
@@ -59,5 +67,23 @@ public class KeyPressed : MonoBehaviour
     private void ChangeColor(GameObject key, Color color)
     {
         key.GetComponent<Renderer>().material.color = color;
+    }
+
+    // Function to shoot a sphere from the cannon arm
+    private void ShootSphere()
+    {
+        // Calculate the spawn position based on the cannon arm's position and its rotation
+        Vector3 spawnPosition = cannonArm.position + cannonArm.forward * 1.5f + cannonArm.up * 1.5f; // Adjust this based on sphere size
+
+        // Instantiate the sphere at the calculated position
+        GameObject sphere = Instantiate(spherePrefab, spawnPosition, cannonArm.rotation);
+
+        // Add force to the sphere's Rigidbody to shoot it upwards
+        Rigidbody rb = sphere.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false; // Make sure it's not kinematic
+            rb.AddForce(cannonArm.up * shootForce); // Shoot it straight up
+        }
     }
 }
