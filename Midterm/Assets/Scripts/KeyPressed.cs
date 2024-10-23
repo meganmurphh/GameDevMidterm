@@ -11,7 +11,7 @@ public class KeyPressed : MonoBehaviour
 
     public Transform cannonArm;
 
-    public float shootForce = 500f;
+    public float shootForce = 450f;
 
     private Color lightGreyColor = new Color(0.75f, 0.75f, 0.75f);
 
@@ -31,7 +31,7 @@ public class KeyPressed : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             ChangeColor(sKey, lightGreyColor);
-            ShootSphere(1);
+            ShootBullet(1);
             Debug.Log("Bullet One shot");
         }
         else
@@ -42,7 +42,7 @@ public class KeyPressed : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
         {
             ChangeColor(dKey, lightGreyColor);
-            ShootSphere(2);
+            ShootBullet(2);
             Debug.Log("Bullet Two shot");
         }
         else
@@ -53,7 +53,7 @@ public class KeyPressed : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             ChangeColor(fKey, lightGreyColor);
-            ShootSphere(3);
+            ShootBullet(3);
             Debug.Log("Bullet Three shot");
         }
         else
@@ -62,14 +62,8 @@ public class KeyPressed : MonoBehaviour
         }
     }
 
-    private void ChangeColor(GameObject key, Color color)
+    private void ShootBullet(int bulletNumber)
     {
-        key.GetComponent<Renderer>().material.color = color;
-    }
-
-    private void ShootSphere(int bulletNumber)
-    {
-        // Instantiate the bullet object based on the key pressed
         GameObject bulletObject = Instantiate(bullet, cannonArm.position + cannonArm.up * 1.5f, cannonArm.rotation);
 
         Rigidbody rb = bulletObject.GetComponent<Rigidbody>();
@@ -82,7 +76,12 @@ public class KeyPressed : MonoBehaviour
         Text bulletText = bulletObject.GetComponentInChildren<Text>();
         if (bulletText != null)
         {
-            bulletText.text = bulletNumber.ToString(); // Set the text based on the key number
+            bulletText.text = bulletNumber.ToString();
         }
+    }
+
+    private void ChangeColor(GameObject key, Color color)
+    {
+        key.GetComponent<Renderer>().material.color = color;
     }
 }
