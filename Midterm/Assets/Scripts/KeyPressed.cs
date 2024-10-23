@@ -3,29 +3,26 @@ using UnityEngine.UI;
 
 public class KeyPressed : MonoBehaviour
 {
-    public GameObject sKey; // Reference to the S key GameObject
-    public GameObject dKey; // Reference to the D key GameObject
-    public GameObject fKey; // Reference to the F key GameObject
+    public GameObject sKey;
+    public GameObject dKey; 
+    public GameObject fKey; 
 
-    public GameObject bullet; // Reference to the sphere prefab
-    public Transform cannonArm; // Reference to the cannon arm's position
+    public GameObject bullet; 
+    public Transform cannonArm; 
 
     public GameObject bulletValueText;
     public Canvas bulletTextCanvas;
 
-    public float shootForce = 500f; // Force with which the sphere will be shot
+    public float shootForce = 500f;
 
-    // Define the light grey color
     private Color lightGreyColor = new Color(0.75f, 0.75f, 0.75f);
 
-    // Store original colors
     private Color originalColorS;
     private Color originalColorD;
     private Color originalColorF;
 
     void Start()
     {
-        // Get the original colors of the key GameObjects
         originalColorS = sKey.GetComponent<Renderer>().material.color;
         originalColorD = dKey.GetComponent<Renderer>().material.color;
         originalColorF = fKey.GetComponent<Renderer>().material.color;
@@ -33,8 +30,7 @@ public class KeyPressed : MonoBehaviour
 
     void Update()
     {
-        // Check if the S key is pressed
-        if (Input.GetKeyDown(KeyCode.S)) // Change to GetKeyDown
+        if (Input.GetKeyDown(KeyCode.S))
         {
             ChangeColor(sKey, lightGreyColor);
             ShootSphere(1);
@@ -45,8 +41,7 @@ public class KeyPressed : MonoBehaviour
             ChangeColor(sKey, originalColorS);
         }
 
-        // Check if the D key is pressed
-        if (Input.GetKeyDown(KeyCode.D)) // Change to GetKeyDown
+        if (Input.GetKeyDown(KeyCode.D))
         {
             ChangeColor(dKey, lightGreyColor);
             ShootSphere(2);
@@ -58,8 +53,7 @@ public class KeyPressed : MonoBehaviour
             ChangeColor(dKey, originalColorD);
         }
 
-        // Check if the F key is pressed
-        if (Input.GetKeyDown(KeyCode.F)) // Change to GetKeyDown
+        if (Input.GetKeyDown(KeyCode.F))
         {
             ChangeColor(fKey, lightGreyColor);
             ShootSphere(3);
@@ -72,40 +66,37 @@ public class KeyPressed : MonoBehaviour
         }
     }
 
-    // Function to change the color of a GameObject
     private void ChangeColor(GameObject key, Color color)
     {
         key.GetComponent<Renderer>().material.color = color;
     }
 
-    // Function to shoot a sphere from the cannon arm
     private void ShootSphere(int keyNumber)
     {
-        // Instantiate the sphere at the calculated position
-        GameObject bulletObject = Instantiate(bullet, cannonArm.position + cannonArm.up * 1.5f, cannonArm.rotation); // Adjust the position if needed
+        GameObject bulletObject = Instantiate(bullet, cannonArm.position + cannonArm.up * 1.5f, cannonArm.rotation);
 
-        // Add force to the sphere's Rigidbody to shoot it upwards
         Rigidbody rb = bulletObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.isKinematic = false; // Make sure it's not kinematic
-            rb.AddForce(cannonArm.up * shootForce); // Shoot it straight up
+            rb.isKinematic = false;
+            rb.AddForce(cannonArm.up * shootForce);
         }
 
         DisplayValueText(keyNumber, bulletObject);
 
     }
-
-    // Function to display legacy text
-    // Function to display legacy text
     private void DisplayValueText(int keyNumber, GameObject parentSphere)
     {
-        // Instantiate the legacy text prefab at the position above the bullet
+        // Instantiate the text prefab at the position above the bullet
         GameObject textObject = Instantiate(bulletValueText, parentSphere.transform.position + Vector3.up * 1.5f, Quaternion.identity);
 
         // Get the Text component from the instantiated object
         Text numberUIText = textObject.GetComponent<Text>();
         numberUIText.text = keyNumber.ToString(); // Set the text based on the key number
+
+        // Attach the FollowBullet script to the text object and set the bulletTransform
+        FollowBullet followBulletScript = textObject.GetComponent<FollowBullet>();
+        followBulletScript.bulletTransform = parentSphere.transform;
 
         // Set the text as a child of the World Space Canvas
         if (bulletTextCanvas != null)
@@ -119,7 +110,8 @@ public class KeyPressed : MonoBehaviour
 
         // Position adjustment to make sure text appears correctly above the sphere
         textObject.transform.position = parentSphere.transform.position + Vector3.up * 1.5f; // Adjust height as necessary
-
     }
+
+
 
 }

@@ -7660,7 +7660,7 @@ MonoBehaviour:
   cannonArm: {fileID: 1703675558}
   bulletValueText: {fileID: 2678331438377355822, guid: 569af175a05f54f478a12e996a2b3865, type: 3}
   bulletTextCanvas: {fileID: 581221363}
-  shootForce: 550
+  shootForce: 450
 --- !u!4 &1704625937
 Transform:
   m_ObjectHideFlags: 0
