@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour
 {
@@ -21,5 +22,21 @@ public class Bullet : MonoBehaviour
     {
         Vector3 screenPoint = mainCamera.WorldToViewportPoint(transform.position);
         return screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Crate"))
+        {
+            Crate crate = other.GetComponent<Crate>();
+            if (crate != null)
+            {
+                int bulletValue = int.Parse(GetComponentInChildren<Text>().text);
+
+                crate.HandleBulletCollision(bulletValue);
+
+                Destroy(gameObject);
+            }
+        }
     }
 }
