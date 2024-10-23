@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CrateSpawner : MonoBehaviour
 {
-    public GameObject cratePrefab; 
-    public float spawnInterval = 20f; 
-    public float spawnRangeX = 100f; 
+    public GameObject cratePrefab;
+    public float spawnInterval = 2f; 
+    public float spawnRangeX = 8f;
 
     private void Start()
     {
@@ -22,8 +22,8 @@ public class CrateSpawner : MonoBehaviour
         Crate crate = crateObject.GetComponent<Crate>();
         if (crate != null)
         {
-            crate.crateValue = Random.Range(1, 101); 
-            crate.UpdateCrateText(); 
+            crate.crateValue = Random.Range(4, 15);
+            crate.UpdateCrateText();
         }
     }
 }

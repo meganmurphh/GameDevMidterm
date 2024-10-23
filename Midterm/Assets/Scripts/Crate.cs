@@ -3,20 +3,24 @@ using UnityEngine.UI;
 
 public class Crate : MonoBehaviour
 {
-    public int crateValue;
+    public int crateValue; 
     public Text crateText;
     public float fallSpeed = 2f;
 
     void Start()
     {
-        UpdateCrateText();
+        if (crateText == null)
+        {
+            crateText = GetComponentInChildren<Text>();
+        }
+        UpdateCrateText(); 
     }
 
     void Update()
     {
         transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
 
-        if (transform.position.y < -10f) 
+        if (transform.position.y < -15f)
         {
             Destroy(gameObject);
         }
