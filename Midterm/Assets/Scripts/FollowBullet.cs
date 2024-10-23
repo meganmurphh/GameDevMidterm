@@ -3,7 +3,7 @@ using UnityEngine;
 public class FollowBullet : MonoBehaviour
 {
     public Transform bulletTransform;
-    public Vector3 offset = new Vector3(0, 1.5f, 0);
+    public Vector3 offset = new Vector3(0, 1.5f, 0); // Adjust the offset as needed
 
     private Camera mainCamera;
 
@@ -16,26 +16,15 @@ public class FollowBullet : MonoBehaviour
     {
         if (bulletTransform != null)
         {
+            // Make the text follow the bullet with the specified offset
             transform.position = bulletTransform.position + offset;
 
-            transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward,
-                             mainCamera.transform.rotation * Vector3.up);
-
-            if (!IsInView())
+            // Make the text face the camera
+            if (mainCamera != null)
             {
-                Destroy(gameObject);
+                transform.LookAt(mainCamera.transform);
+                transform.Rotate(0, 180, 0); // Optional: Rotate to face camera correctly
             }
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    private bool IsInView()
-    {
-        Vector3 screenPoint = mainCamera.WorldToViewportPoint(transform.position);
-        bool isInView = screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-        return isInView;
     }
 }

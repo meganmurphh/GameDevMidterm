@@ -4,14 +4,12 @@ using UnityEngine.UI;
 public class KeyPressed : MonoBehaviour
 {
     public GameObject sKey;
-    public GameObject dKey; 
-    public GameObject fKey; 
+    public GameObject dKey;
+    public GameObject fKey;
 
-    public GameObject bullet; 
-    public Transform cannonArm; 
+    public GameObject bullet;
 
-    public GameObject bulletValueText;
-    public Canvas bulletTextCanvas;
+    public Transform cannonArm;
 
     public float shootForce = 500f;
 
@@ -34,7 +32,7 @@ public class KeyPressed : MonoBehaviour
         {
             ChangeColor(sKey, lightGreyColor);
             ShootSphere(1);
-            Debug.Log("Number 1 shot");
+            Debug.Log("Bullet One shot");
         }
         else
         {
@@ -45,8 +43,7 @@ public class KeyPressed : MonoBehaviour
         {
             ChangeColor(dKey, lightGreyColor);
             ShootSphere(2);
-            Debug.Log("Number 2 shot");
-
+            Debug.Log("Bullet Two shot");
         }
         else
         {
@@ -57,8 +54,7 @@ public class KeyPressed : MonoBehaviour
         {
             ChangeColor(fKey, lightGreyColor);
             ShootSphere(3);
-            Debug.Log("Number 3 shot");
-
+            Debug.Log("Bullet Three shot");
         }
         else
         {
@@ -71,8 +67,9 @@ public class KeyPressed : MonoBehaviour
         key.GetComponent<Renderer>().material.color = color;
     }
 
-    private void ShootSphere(int keyNumber)
+    private void ShootSphere(int bulletNumber)
     {
+        // Instantiate the bullet object based on the key pressed
         GameObject bulletObject = Instantiate(bullet, cannonArm.position + cannonArm.up * 1.5f, cannonArm.rotation);
 
         Rigidbody rb = bulletObject.GetComponent<Rigidbody>();
@@ -82,36 +79,10 @@ public class KeyPressed : MonoBehaviour
             rb.AddForce(cannonArm.up * shootForce);
         }
 
-        DisplayValueText(keyNumber, bulletObject);
-
-    }
-    private void DisplayValueText(int keyNumber, GameObject parentSphere)
-    {
-        // Instantiate the text prefab at the position above the bullet
-        GameObject textObject = Instantiate(bulletValueText, parentSphere.transform.position + Vector3.up * 1.5f, Quaternion.identity);
-
-        // Get the Text component from the instantiated object
-        Text numberUIText = textObject.GetComponent<Text>();
-        numberUIText.text = keyNumber.ToString(); // Set the text based on the key number
-
-        // Attach the FollowBullet script to the text object and set the bulletTransform
-        FollowBullet followBulletScript = textObject.GetComponent<FollowBullet>();
-        followBulletScript.bulletTransform = parentSphere.transform;
-
-        // Set the text as a child of the World Space Canvas
-        if (bulletTextCanvas != null)
+        Text bulletText = bulletObject.GetComponentInChildren<Text>();
+        if (bulletText != null)
         {
-            textObject.transform.SetParent(bulletTextCanvas.transform, false); // Parent to the bullet text canvas
+            bulletText.text = bulletNumber.ToString(); // Set the text based on the key number
         }
-        else
-        {
-            Debug.LogError("Bullet Text Canvas is not assigned in the Inspector.");
-        }
-
-        // Position adjustment to make sure text appears correctly above the sphere
-        textObject.transform.position = parentSphere.transform.position + Vector3.up * 1.5f; // Adjust height as necessary
     }
-
-
-
 }
