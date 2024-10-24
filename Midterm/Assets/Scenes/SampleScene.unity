@@ -648,7 +648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cratePrefab: {fileID: 1550306394305360728, guid: 48f4b5669abad4b4ea56d7c19f30400b, type: 3}
   spawnInterval: 8
-  spawnRangeX: 8
+  spawnRangeX: 10
 --- !u!4 &514198378
 Transform:
   m_ObjectHideFlags: 0

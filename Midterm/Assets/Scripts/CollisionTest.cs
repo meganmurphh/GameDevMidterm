@@ -6,12 +6,20 @@ public class CollisionTest : MonoBehaviour
     private Text crateText;
     public int crateValue;
 
-    public float fallSpeed = 2f;
+    public float fallSpeed = 1.5f;
+
+    private AudioSource audioSource;
+    public AudioClip destructionSound;
 
     void Start()
     {
         crateText = GetComponentInChildren<Text>();
         UpdateCrateText();
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource != null && destructionSound != null)
+        {
+            audioSource.clip = destructionSound;
+        }
     }
 
     public void UpdateCrateText()
@@ -42,6 +50,7 @@ public class CollisionTest : MonoBehaviour
                 if (crateValue == 0)
                 {
                     Debug.Log("Crate destroyed");
+                    PlayDestructionSound();
                     Destroy(gameObject);
                 }
                 if (crateValue < 0)
@@ -56,6 +65,19 @@ public class CollisionTest : MonoBehaviour
             }
 
             Destroy(collision.gameObject);
+        }
+    }
+
+    void PlayDestructionSound()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Play(); // Play the destruction sound
+            Debug.Log("Playing sound: " + audioSource.clip.name); // Confirm sound is played
+        }
+        else
+        {
+            Debug.LogError("AudioSource is null!");
         }
     }
 
