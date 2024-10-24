@@ -32,7 +32,6 @@ public class KeyPressed : MonoBehaviour
         {
             ChangeColor(sKey, lightGreyColor);
             ShootBullet(1);
-            Debug.Log("Bullet One shot");
         }
         else
         {
@@ -43,7 +42,6 @@ public class KeyPressed : MonoBehaviour
         {
             ChangeColor(dKey, lightGreyColor);
             ShootBullet(2);
-            Debug.Log("Bullet Two shot");
         }
         else
         {
@@ -54,7 +52,6 @@ public class KeyPressed : MonoBehaviour
         {
             ChangeColor(fKey, lightGreyColor);
             ShootBullet(3);
-            Debug.Log("Bullet Three shot");
         }
         else
         {
@@ -64,21 +61,37 @@ public class KeyPressed : MonoBehaviour
 
     private void ShootBullet(int bulletNumber)
     {
-        GameObject bulletObject = Instantiate(bullet, cannonArm.position + cannonArm.up * 1.5f, cannonArm.rotation);
+        GameObject bulletObject = Instantiate(bullet, cannonArm.position + cannonArm.up * 2f, cannonArm.rotation);
+
+        // Debug log for bullet position and rotation
+        Debug.Log("Bullet instantiated at: " + bulletObject.transform.position);
+        Debug.Log("Bullet rotation: " + bulletObject.transform.rotation);
 
         Rigidbody rb = bulletObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.isKinematic = false;
             rb.AddForce(cannonArm.up * shootForce);
+            Debug.Log("Bullet force applied: " + cannonArm.up * shootForce);
+        }
+        else
+        {
+            Debug.LogError("Rigidbody not found on the instantiated bullet.");
         }
 
         Text bulletText = bulletObject.GetComponentInChildren<Text>();
         if (bulletText != null)
         {
             bulletText.text = bulletNumber.ToString();
+            Debug.Log("Bullet number set to: " + bulletText.text);
+        }
+        else
+        {
+            Debug.LogError("Bullet text component not found in instantiated bullet.");
         }
     }
+
+
 
     private void ChangeColor(GameObject key, Color color)
     {

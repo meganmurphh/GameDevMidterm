@@ -31,18 +31,28 @@ public class Crate : MonoBehaviour
         if (crateText != null)
         {
             crateText.text = crateValue.ToString();
+            Debug.Log("Crate text updated to: " + crateText.text);
         }
     }
 
+
     public void HandleBulletCollision(int bulletValue)
     {
-        Debug.Log("Bullet Hit Crate");
+
+        Debug.Log("Bullet Hit Crate with value: " + bulletValue);
+        Debug.Log("Current Crate Value Before Hit: " + crateValue);
+
         crateValue -= bulletValue;
+
+        Debug.Log("Crate value after hit: " + crateValue);
         UpdateCrateText();
 
         if (crateValue <= 0)
         {
+            Debug.Log("Crate destroyed");
             Destroy(gameObject);
         }
     }
+
+
 }

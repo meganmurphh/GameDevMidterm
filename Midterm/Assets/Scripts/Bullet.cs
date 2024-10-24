@@ -24,22 +24,4 @@ public class Bullet : MonoBehaviour
         return screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Crate"))
-        {
-            Debug.Log("Bullet hit crate");
-            Crate crate = other.GetComponent<Crate>();
-            if (crate != null)
-            {
-                int bulletValue = int.Parse(GetComponentInChildren<Text>().text);
-                crate.HandleBulletCollision(bulletValue);
-                Destroy(gameObject);
-            }
-        }
-        else
-        {
-            Debug.Log("Bullet hit something else: " + other.tag);
-        }
-    }
 }

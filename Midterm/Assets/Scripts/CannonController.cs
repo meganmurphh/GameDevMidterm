@@ -3,8 +3,8 @@ using UnityEngine;
 public class CannonController : MonoBehaviour
 {
     public float rotationSpeed = 3f;
-    public float minAngle = -45f;
-    public float maxAngle = 20f;  
+    public float minAngle = -80f;
+    public float maxAngle = 80f;  
 
     private float currentAngle = 0f; 
 
