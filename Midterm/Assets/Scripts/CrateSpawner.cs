@@ -15,7 +15,7 @@ public class CrateSpawner : MonoBehaviour
     {
         float randomX = Random.Range(-spawnRangeX, spawnRangeX);
 
-        Vector3 spawnPosition = new Vector3(randomX, 7f, 15f);
+        Vector3 spawnPosition = new Vector3(randomX, 7f, -5f);
 
         GameObject crateObject = Instantiate(cratePrefab, spawnPosition, Quaternion.identity);
 

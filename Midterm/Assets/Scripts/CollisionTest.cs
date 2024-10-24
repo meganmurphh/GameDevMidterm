@@ -4,7 +4,9 @@ using UnityEngine.UI;
 public class CollisionTest : MonoBehaviour
 {
     private Text crateText;
-    private int crateValue; 
+    private int crateValue;
+
+    public float fallSpeed = 2f;
 
     void Start()
     {
@@ -43,11 +45,16 @@ public class CollisionTest : MonoBehaviour
                 Debug.LogError("Bullet value could not be parsed from bullet text.");
             }
 
-            Rigidbody crateRb = GetComponent<Rigidbody>();
-            if (crateRb != null)
-            {
-                crateRb.isKinematic = true; 
-            }
+            Destroy(collision.gameObject);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        Rigidbody crateRb = GetComponent<Rigidbody>();
+        if (crateRb != null && !crateRb.isKinematic)
+        {
+            crateRb.velocity = new Vector3(crateRb.velocity.x, -fallSpeed, crateRb.velocity.z);
         }
     }
 }

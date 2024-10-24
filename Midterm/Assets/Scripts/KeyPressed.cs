@@ -63,7 +63,6 @@ public class KeyPressed : MonoBehaviour
     {
         GameObject bulletObject = Instantiate(bullet, cannonArm.position + cannonArm.up * 2f, cannonArm.rotation);
 
-        // Debug log for bullet position and rotation
         Debug.Log("Bullet instantiated at: " + bulletObject.transform.position);
         Debug.Log("Bullet rotation: " + bulletObject.transform.rotation);
 
