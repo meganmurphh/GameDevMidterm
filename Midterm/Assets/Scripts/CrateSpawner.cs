@@ -19,7 +19,7 @@ public class CrateSpawner : MonoBehaviour
 
         GameObject crateObject = Instantiate(cratePrefab, spawnPosition, Quaternion.identity);
 
-        Crate crate = crateObject.GetComponent<Crate>();
+        CollisionTest crate = crateObject.GetComponent<CollisionTest>();
         if (crate != null)
         {
             crate.crateValue = Random.Range(4, 15);

@@ -4,17 +4,22 @@ using UnityEngine.UI;
 public class CollisionTest : MonoBehaviour
 {
     private Text crateText;
-    private int crateValue;
+    public int crateValue;
 
     public float fallSpeed = 2f;
 
     void Start()
     {
         crateText = GetComponentInChildren<Text>();
+        UpdateCrateText();
+    }
+
+    public void UpdateCrateText()
+    {
         if (crateText != null)
         {
-            int.TryParse(crateText.text, out crateValue);
-            Debug.Log("Initial Crate Value: " + crateValue);
+            crateText.text = crateValue.ToString();
+            Debug.Log("Crate value set to: " + crateValue);
         }
     }
 
@@ -34,9 +39,14 @@ public class CollisionTest : MonoBehaviour
 
                 crateText.text = crateValue.ToString();
 
-                if (crateValue <= 0)
+                if (crateValue == 0)
                 {
                     Debug.Log("Crate destroyed");
+                    Destroy(gameObject);
+                }
+                if (crateValue < 0)
+                {
+                    Debug.Log("Negative Value");
                     Destroy(gameObject);
                 }
             }
