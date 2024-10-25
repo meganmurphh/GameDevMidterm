@@ -7,22 +7,21 @@ public class Player : MonoBehaviour
     public int bulletsOf1 = 50;
     public int bulletsOf2 = 50;
     public int bulletsOf3 = 50;
+    public int points = 0;
 
     public Text bulletText1;
     public Text bulletText2;
     public Text bulletText3;
+    public Text pointsText;
 
-    public int points = 0;
-
-    void Start()
+    private void Update()
     {
-        UpdateBulletTexts();
+        UpdateTexts();
     }
 
     public void AdvanceLevel()
     {
         level++;
-        Debug.Log("Level advanced");
     }
 
     public void DropLevel()
@@ -39,8 +38,7 @@ public class Player : MonoBehaviour
                 if (bulletsOf1 > 0)
                 {
                     bulletsOf1--;
-                    Debug.Log(bulletsOf1 + " #1 bullets left");
-                    UpdateBulletTexts();
+                    UpdateTexts();
                     return true;
                 }
                 break;
@@ -48,8 +46,7 @@ public class Player : MonoBehaviour
                 if (bulletsOf2 > 0)
                 {
                     bulletsOf2--;
-                    Debug.Log(bulletsOf2 + " #2 bullets left");
-                    UpdateBulletTexts();
+                    UpdateTexts();
                     return true;
                 }
                 break;
@@ -57,8 +54,7 @@ public class Player : MonoBehaviour
                 if (bulletsOf3 > 0)
                 {
                     bulletsOf3--;
-                    Debug.Log(bulletsOf3 + " #3 bullets left");
-                    UpdateBulletTexts();
+                    UpdateTexts();
                     return true;
                 }
                 break;
@@ -66,10 +62,11 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    void UpdateBulletTexts()
+    void UpdateTexts()
     {
         bulletText1.text = bulletsOf1.ToString();
         bulletText2.text = bulletsOf2.ToString();
         bulletText3.text = bulletsOf3.ToString();
+        pointsText.text = "Points: " + points.ToString();
     }
 }
