@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
                 if (bulletsOf1 > 0)
                 {
                     bulletsOf1--;
+                    Debug.Log(bulletsOf1 + " #1 bullets left");
+
                     return true;
                 }
                 break;
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
                 if (bulletsOf2 > 0)
                 {
                     bulletsOf2--;
+                    Debug.Log(bulletsOf2 + " #2 bullets left");
                     return true;
                 }
                 break;
@@ -41,6 +44,7 @@ public class Player : MonoBehaviour
                 if (bulletsOf3 > 0)
                 {
                     bulletsOf3--;
+                    Debug.Log(bulletsOf3 + " #3 bullets left");
                     return true;
                 }
                 break;
