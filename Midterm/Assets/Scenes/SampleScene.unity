@@ -1431,6 +1431,9 @@ MonoBehaviour:
   bulletsOf1: 50
   bulletsOf2: 50
   bulletsOf3: 50
+  bulletText1: {fileID: 1543774053}
+  bulletText2: {fileID: 1833183047}
+  bulletText3: {fileID: 1553160201}
 --- !u!4 &639799487
 Transform:
   m_ObjectHideFlags: 0

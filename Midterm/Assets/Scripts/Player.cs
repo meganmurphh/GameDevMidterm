@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     public Text bulletText2;
     public Text bulletText3;
 
+    public int points = 0;
+
     void Start()
     {
         UpdateBulletTexts();

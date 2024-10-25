@@ -21,6 +21,7 @@ public class KeyPressed : MonoBehaviour
 
     private Player player;
 
+    public int lastBulletType;
 
     void Start()
     {
@@ -37,6 +38,7 @@ public class KeyPressed : MonoBehaviour
             if (player.UseBullet(1))
             {
                 ChangeColor(sKey, lightGreyColor);
+                lastBulletType = 1;
                 ShootBullet(1);
             }
         }
@@ -50,6 +52,7 @@ public class KeyPressed : MonoBehaviour
             if (player.UseBullet(2))
             {
                 ChangeColor(dKey, lightGreyColor);
+                lastBulletType = 2;
                 ShootBullet(2);
             }
         }
@@ -63,6 +66,7 @@ public class KeyPressed : MonoBehaviour
             if (player.UseBullet(3))
             {
                 ChangeColor(fKey, lightGreyColor);
+                lastBulletType = 3;
                 ShootBullet(3);
             }
         }

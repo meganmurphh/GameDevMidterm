@@ -11,10 +11,13 @@ public class CollisionTest : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip destructionSound;
 
+    private Player player;
+
     void Start()
     {
         crateText = GetComponentInChildren<Text>();
         UpdateCrateText();
+        player = FindObjectOfType<Player>();
         audioSource = GetComponent<AudioSource>();
         if (audioSource != null && destructionSound != null)
         {
@@ -47,6 +50,17 @@ public class CollisionTest : MonoBehaviour
                 {
                     Debug.Log("Crate destroyed");
                     PlayDestructionSound();
+
+                    if (player != null)
+                    {
+                        KeyPressed keyPressed = FindObjectOfType<KeyPressed>();
+                        if (keyPressed != null)
+                        {
+                            player.points += keyPressed.lastBulletType;
+                            Debug.Log($"Points awarded: {keyPressed.lastBulletType}. Total points: {player.points}");
+                        }
+                    }
+
                     Destroy(gameObject);
                 }
                 if (crateValue < 0)
