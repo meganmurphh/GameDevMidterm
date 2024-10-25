@@ -1,11 +1,21 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public int level = 1; 
     public int bulletsOf1 = 50;
     public int bulletsOf2 = 50;
-    public int bulletsOf3 = 50; 
+    public int bulletsOf3 = 50;
+
+    public Text bulletText1;
+    public Text bulletText2;
+    public Text bulletText3;
+
+    void Start()
+    {
+        UpdateBulletTexts();
+    }
 
     public void AdvanceLevel()
     {
@@ -28,7 +38,7 @@ public class Player : MonoBehaviour
                 {
                     bulletsOf1--;
                     Debug.Log(bulletsOf1 + " #1 bullets left");
-
+                    UpdateBulletTexts();
                     return true;
                 }
                 break;
@@ -37,6 +47,7 @@ public class Player : MonoBehaviour
                 {
                     bulletsOf2--;
                     Debug.Log(bulletsOf2 + " #2 bullets left");
+                    UpdateBulletTexts();
                     return true;
                 }
                 break;
@@ -45,10 +56,18 @@ public class Player : MonoBehaviour
                 {
                     bulletsOf3--;
                     Debug.Log(bulletsOf3 + " #3 bullets left");
+                    UpdateBulletTexts();
                     return true;
                 }
                 break;
         }
         return false;
+    }
+
+    void UpdateBulletTexts()
+    {
+        bulletText1.text = bulletsOf1.ToString();
+        bulletText2.text = bulletsOf2.ToString();
+        bulletText3.text = bulletsOf3.ToString();
     }
 }
