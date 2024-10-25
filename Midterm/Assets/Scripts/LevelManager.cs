@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class LevelManager : MonoBehaviour
     private int cratesDestroyed = 0;
 
     private int[] crateGoals = { 3, 5, 8 };
+
+    public Text levelText;
 
     void Start()
     {
@@ -16,6 +19,7 @@ public class LevelManager : MonoBehaviour
     public void ResetLevel()
     {
         cratesDestroyed = 0;
+        UpdateLevelText();
     }
 
     public void CrateDestroyed()
@@ -36,5 +40,17 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Level Failed.");
         player.DropLevel();
         ResetLevel();
+    }
+
+    private void UpdateLevelText()
+    {
+        if (levelText != null)
+        {
+            levelText.text = "Level: " + player.level;
+        }
+        else
+        {
+            Debug.LogError("Level Text is not assigned!");
+        }
     }
 }
