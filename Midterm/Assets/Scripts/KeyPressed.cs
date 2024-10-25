@@ -19,19 +19,26 @@ public class KeyPressed : MonoBehaviour
     private Color originalColorD;
     private Color originalColorF;
 
+    private Player player;
+
+
     void Start()
     {
         originalColorS = sKey.GetComponent<Renderer>().material.color;
         originalColorD = dKey.GetComponent<Renderer>().material.color;
         originalColorF = fKey.GetComponent<Renderer>().material.color;
+        player = FindObjectOfType<Player>();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            ChangeColor(sKey, lightGreyColor);
-            ShootBullet(1);
+            if (player.UseBullet(1))
+            {
+                ChangeColor(sKey, lightGreyColor);
+                ShootBullet(1);
+            }
         }
         else
         {
@@ -40,8 +47,11 @@ public class KeyPressed : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            ChangeColor(dKey, lightGreyColor);
-            ShootBullet(2);
+            if (player.UseBullet(2))
+            {
+                ChangeColor(dKey, lightGreyColor);
+                ShootBullet(2);
+            }
         }
         else
         {
@@ -50,8 +60,11 @@ public class KeyPressed : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            ChangeColor(fKey, lightGreyColor);
-            ShootBullet(3);
+            if (player.UseBullet(3))
+            {
+                ChangeColor(fKey, lightGreyColor);
+                ShootBullet(3);
+            }
         }
         else
         {
@@ -63,15 +76,11 @@ public class KeyPressed : MonoBehaviour
     {
         GameObject bulletObject = Instantiate(bullet, cannonArm.position + cannonArm.up * 2f, cannonArm.rotation);
 
-        Debug.Log("Bullet instantiated at: " + bulletObject.transform.position);
-        Debug.Log("Bullet rotation: " + bulletObject.transform.rotation);
-
         Rigidbody rb = bulletObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.isKinematic = false;
             rb.AddForce(cannonArm.up * shootForce);
-            Debug.Log("Bullet force applied: " + cannonArm.up * shootForce);
         }
         else
         {
@@ -82,7 +91,6 @@ public class KeyPressed : MonoBehaviour
         if (bulletText != null)
         {
             bulletText.text = bulletNumber.ToString();
-            Debug.Log("Bullet number set to: " + bulletText.text);
         }
         else
         {

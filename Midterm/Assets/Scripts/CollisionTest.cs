@@ -27,23 +27,19 @@ public class CollisionTest : MonoBehaviour
         if (crateText != null)
         {
             crateText.text = crateValue.ToString();
-            Debug.Log("Crate value set to: " + crateValue);
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided with: " + collision.gameObject.name);
 
         if (collision.gameObject.CompareTag("Bullet")) 
         {
-            Debug.Log("Bullet hit crate!");
 
             Text bulletText = collision.gameObject.GetComponentInChildren<Text>();
             if (bulletText != null && int.TryParse(bulletText.text, out int bulletValue))
             {
                 crateValue -= bulletValue;
-                Debug.Log("Crate value after hit: " + crateValue);
 
                 crateText.text = crateValue.ToString();
 
@@ -55,7 +51,6 @@ public class CollisionTest : MonoBehaviour
                 }
                 if (crateValue < 0)
                 {
-                    Debug.Log("Negative Value");
                     Destroy(gameObject);
                 }
             }
@@ -72,8 +67,8 @@ public class CollisionTest : MonoBehaviour
     {
         if (audioSource != null)
         {
-            audioSource.Play(); // Play the destruction sound
-            Debug.Log("Playing sound: " + audioSource.clip.name); // Confirm sound is played
+            audioSource.Play();
+            Debug.Log("Playing sound: " + audioSource.clip.name); 
         }
         else
         {
@@ -89,4 +84,14 @@ public class CollisionTest : MonoBehaviour
             crateRb.velocity = new Vector3(crateRb.velocity.x, -fallSpeed, crateRb.velocity.z);
         }
     }
+
+    void OnDestroy()
+    {
+        LevelManager levelManager = FindObjectOfType<LevelManager>();
+        if (levelManager != null)
+        {
+            levelManager.CrateDestroyed();
+        }
+    }
+
 }
