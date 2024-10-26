@@ -11,12 +11,14 @@ public class StartScreenManager : MonoBehaviour
     void Start()
     {
         startScreenCanvas.SetActive(true);
+        pauseMenuCanvas.SetActive(false);
         Time.timeScale = 0f;
     }
 
     public void StartGame()
     {
         startScreenCanvas.SetActive(false);
+        pauseMenuCanvas.SetActive(false);
         Time.timeScale = 1f;
     }
 
