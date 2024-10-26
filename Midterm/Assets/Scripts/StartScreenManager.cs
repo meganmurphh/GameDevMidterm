@@ -1,9 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class StartScreenManager : MonoBehaviour
 {
-    public GameObject startScreenCanvas; // Reference to the Start Screen Canvas
+    public GameObject startScreenCanvas;
+    public GameObject pauseMenuCanvas;
+    public bool IsStartScreenActive => startScreenCanvas.activeSelf;
+
+    private bool isPaused = false;
 
     void Start()
     {
@@ -15,5 +18,23 @@ public class StartScreenManager : MonoBehaviour
     {
         startScreenCanvas.SetActive(false);
         Time.timeScale = 1f;
+    }
+
+    public void TogglePauseGame()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0f : 1f;
+
+        if (pauseMenuCanvas != null)
+        {
+            pauseMenuCanvas.SetActive(isPaused);
+        }
+
+        Debug.Log(isPaused ? "Game Paused" : "Game Resumed");
+    }
+
+    public void ShowStartScreen()
+    {
+        startScreenCanvas.SetActive(true);
     }
 }
