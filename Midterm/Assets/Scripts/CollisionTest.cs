@@ -63,8 +63,18 @@ public class CollisionTest : MonoBehaviour
 
                     Destroy(gameObject);
                 }
-                if (crateValue < 0)
+                else if (bulletValue > crateValue)
                 {
+                    if (player != null)
+                    {
+                        KeyPressed keyPressed = FindObjectOfType<KeyPressed>();
+                        if (keyPressed != null)
+                        {
+                            player.points -= bulletValue;
+                            Debug.Log($"Points deducted: {bulletValue}. Total points: {player.points}");
+                        }
+                    }
+
                     Destroy(gameObject);
                 }
             }
@@ -73,6 +83,7 @@ public class CollisionTest : MonoBehaviour
                 Debug.LogError("Bullet value could not be parsed from bullet text.");
             }
 
+            bulletValue = 0;
             Destroy(collision.gameObject);
         }
     }
