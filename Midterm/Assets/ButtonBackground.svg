@@ -1,2 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" id="gbox" viewbox="0 0 240 80" width="240" height="80" style="width:240px; height:80px"> <style> rect{ stroke-width:3;stroke:rgb(237,241,248) } </style> <defs> <linearGradient id="g1" x1="0" y1="1" x2="0"> <stop offset="0" stop-color="rgb(255,244,235)"/> <stop offset="1" stop-color="rgb(215,224,232)"/> </linearGradient> </defs> <rect width="216" height="72" fill="url(#g1)" x="12" y="4" rx="36"/> </svg>
