@@ -1,28 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CollisionTest : MonoBehaviour
+public class Crate : MonoBehaviour
 {
-    private Text crateText;
     public int crateValue;
+    public float fallSpeed = 1f;
+    public float minYPos = -5f;
 
-    public float fallSpeed = 1.5f;
-
-    private AudioSource audioSource;
-    public AudioClip destructionSound;
-
+    private Text crateText;
     private Player player;
+    private bool destroyedByPlayer = false;
 
     void Start()
     {
         crateText = GetComponentInChildren<Text>();
         UpdateCrateText();
         player = FindObjectOfType<Player>();
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource != null && destructionSound != null)
-        {
-            audioSource.clip = destructionSound;
-        }
     }
 
     public void UpdateCrateText()
@@ -36,7 +29,7 @@ public class CollisionTest : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.CompareTag("Bullet")) 
+        if (collision.gameObject.CompareTag("Bullet"))
         {
 
             Text bulletText = collision.gameObject.GetComponentInChildren<Text>();
@@ -48,8 +41,7 @@ public class CollisionTest : MonoBehaviour
 
                 if (crateValue == 0)
                 {
-                    Debug.Log("Crate destroyed");
-                    PlayDestructionSound();
+                    destroyedByPlayer = true;
 
                     if (player != null)
                     {
@@ -57,13 +49,13 @@ public class CollisionTest : MonoBehaviour
                         if (keyPressed != null)
                         {
                             player.points += keyPressed.lastBulletType;
-                            Debug.Log($"Points awarded: {keyPressed.lastBulletType}. Total points: {player.points}");
                         }
                     }
 
                     Destroy(gameObject);
 
-                } else if (crateValue < 0)
+                }
+                else if (crateValue < 0)
                 {
                     if (player != null)
                     {
@@ -71,7 +63,6 @@ public class CollisionTest : MonoBehaviour
                         if (keyPressed != null)
                         {
                             player.points -= keyPressed.lastBulletType;
-                            Debug.Log($"Points deducted: {keyPressed.lastBulletType}. Total points: {player.points}");
                         }
                     }
 
@@ -89,19 +80,6 @@ public class CollisionTest : MonoBehaviour
         }
     }
 
-    void PlayDestructionSound()
-    {
-        if (audioSource != null)
-        {
-            audioSource.Play();
-            Debug.Log("Playing sound: " + audioSource.clip.name); 
-        }
-        else
-        {
-            Debug.LogError("AudioSource is null!");
-        }
-    }
-
     void FixedUpdate()
     {
         Rigidbody crateRb = GetComponent<Rigidbody>();
@@ -109,14 +87,28 @@ public class CollisionTest : MonoBehaviour
         {
             crateRb.velocity = new Vector3(crateRb.velocity.x, -fallSpeed, crateRb.velocity.z);
         }
+
+        if (transform.position.y < minYPos)
+        {
+            DestroyOutOfBoundsCrate();
+        }
+    }
+
+    private void DestroyOutOfBoundsCrate()
+    {
+        destroyedByPlayer = false;
+        Destroy(gameObject);
     }
 
     void OnDestroy()
     {
-        LevelManager levelManager = FindObjectOfType<LevelManager>();
-        if (levelManager != null)
+        if (destroyedByPlayer)
         {
-            levelManager.CrateDestroyed();
+            LevelManager levelManager = FindObjectOfType<LevelManager>();
+            if (levelManager != null)
+            {
+                levelManager.CrateDestroyed();
+            }
         }
     }
 

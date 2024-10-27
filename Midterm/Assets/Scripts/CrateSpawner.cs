@@ -15,11 +15,11 @@ public class CrateSpawner : MonoBehaviour
     {
         float randomX = Random.Range(-spawnRangeX, spawnRangeX);
 
-        Vector3 spawnPosition = new Vector3(randomX, 7f, -5f);
+        Vector3 spawnPosition = new Vector3(randomX, 7f, -4.5f);
 
         GameObject crateObject = Instantiate(cratePrefab, spawnPosition, Quaternion.identity);
 
-        CollisionTest crate = crateObject.GetComponent<CollisionTest>();
+        Crate crate = crateObject.GetComponent<Crate>();
         if (crate != null)
         {
             crate.crateValue = Random.Range(4, 15);

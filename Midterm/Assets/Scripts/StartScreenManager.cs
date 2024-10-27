@@ -32,7 +32,6 @@ public class StartScreenManager : MonoBehaviour
             pauseMenuCanvas.SetActive(isPaused);
         }
 
-        Debug.Log(isPaused ? "Game Paused" : "Game Resumed");
     }
 
     public void ShowStartScreen()

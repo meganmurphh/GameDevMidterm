@@ -1,25 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public Timer timer;
-    public Player player;
+    private Timer timer;
+    private Player player;
     public GameObject endScreenCanvas;
     public Text finalScoreText;
     public Text highScoreText;
 
-    private bool gameEnded = false;
-
-    void Start()
+    private void Start()
     {
+        timer = GetComponent<Timer>();
+        player = GetComponent<Player>();
+
         endScreenCanvas.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
-        if (!gameEnded && (timer.remainingTime <= 0 || (player.bulletsOf1 <= 0 && player.bulletsOf2 <= 0 && player.bulletsOf3 <= 0)))
+        if (timer.totalTime <= 0 || (player.bulletsOf1 <= 0 && player.bulletsOf2 <= 0 && player.bulletsOf3 <= 0))
         {
             EndGame();
         }
@@ -27,9 +27,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        gameEnded = true;
         endScreenCanvas.SetActive(true);
-        Time.timeScale = 0f;
         finalScoreText.text = "Final Score: " + player.points;
 
         int highScore = PlayerPrefs.GetInt("HighScore", 0);
@@ -39,11 +37,14 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", highScore);
         }
         highScoreText.text = "High Score: " + highScore;
+
+        Time.timeScale = 0f;
     }
 
     public void RestartGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        PlayerPrefs.Save();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }

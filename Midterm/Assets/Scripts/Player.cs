@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     public void DropLevel()
     {
         level = Mathf.Max(1, level - 1);
-        Debug.Log("Level decreased");
     }
 
     public bool UseBullet(int bulletType)
