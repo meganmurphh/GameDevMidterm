@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
     public Text timerText;
     public float totalTime = 120f;
 
-    private float remainingTime;
+    public float remainingTime;
 
     void Start()
     {
